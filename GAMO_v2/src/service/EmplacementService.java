@@ -21,11 +21,13 @@ public class EmplacementService extends AbstractDao<Emplacement> {
         super(Emplacement.class);
     }
 
-    public void saveEmplacement(Emplacement emplacement) throws Exception {
+    @Override
+    public int save(Emplacement emplacement) throws Exception {
         Equipement equipement = equipementService.findById(emplacement.getEquipement().getId());
-        save(emplacement);
-        equipement.setQteGlobal(equipement.getQteGlobal()+emplacement.getQte());
+        super.save(emplacement);
+        equipement.setQteGlobal(equipement.getQteGlobal() + emplacement.getQte());
         equipementService.update(equipement);
+        return 1;
     }
 
 }
